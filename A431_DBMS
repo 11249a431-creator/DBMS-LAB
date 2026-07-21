@@ -1,0 +1,251 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Jul 21 15:01:48 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A431@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create Table Student(
+  2  studentid,
+  3  ;
+
+*
+ERROR at line 3:
+ORA-00904: : invalid identifier
+
+
+SQL> create Table Student(
+  2  studentid(4),
+  3  studentname Varchar2(15),
+  4  deptname Varchar2(5),
+  5  );
+studentid(4),
+         *
+ERROR at line 2:
+ORA-00902: invalid datatype
+
+
+SQL> create Table Student(
+  2  studentid Number(4),
+  3  studentname Varchar2(15),
+  4  deptname Varchar2(5),
+  5  );
+)
+*
+ERROR at line 5:
+ORA-00904: : invalid identifier
+
+
+SQL> create Table Student(
+  2  studentid Number(4),
+  3  studentname Varchar2(15),
+  4  deptname Varchar2(5)
+  5  );
+
+Table created.
+
+SQL> desc Student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(15)
+ DEPTNAME                                           VARCHAR2(5)
+
+SQL> insert into Student values(A431,'Leela','CSE');
+insert into Student values(A431,'Leela','CSE')
+                           *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into Student values('A431','Leela','CSE');
+insert into Student values('A431','Leela','CSE')
+                           *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> insert into Student values(431,'Leela','CSE');
+
+1 row created.
+
+SQL> insert into Student values(048,'Anu','CSE');
+
+1 row created.
+
+SQL> insert into Student values(028,'bhavs','CSE');
+
+1 row created.
+
+SQL> select * from Student
+  2  ;
+
+ STUDENTID STUDENTNAME     DEPTN
+---------- --------------- -----
+       431 Leela           CSE
+        48 Anu             CSE
+        28 bhavs           CSE
+
+SQL> desc Student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(15)
+ DEPTNAME                                           VARCHAR2(5)
+
+
+SQL> create Table Student1 as select * from Student;
+
+Table created.
+
+SQL> insert Table Student1 select * from Student;
+insert Table Student1 select * from Student
+       *
+ERROR at line 1:
+ORA-00925: missing INTO keyword
+
+
+SQL> insert into Table Student1 select * from Student;
+insert into Table Student1 select * from Student
+            *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> insert into Student1 select * from Student;
+
+3 rows created.
+
+SQL> desc Student1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(15)
+ DEPTNAME                                           VARCHAR2(5)
+
+
+
+SQL> select * from Student1;
+
+ STUDENTID STUDENTNAME     DEPTN
+---------- --------------- -----
+       431 Leela           CSE
+        48 Anu             CSE
+        28 bhavs           CSE
+       431 Leela           CSE
+        48 Anu             CSE
+        28 bhavs           CSE
+
+6 rows selected.
+
+SQL> update Student1 set studentid=100;
+
+6 rows updated.
+
+SQL> desc Student1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(15)
+ DEPTNAME                                           VARCHAR2(5)
+
+SQL> select * from Student1;
+
+ STUDENTID STUDENTNAME     DEPTN
+---------- --------------- -----
+       100 Leela           CSE
+       100 Anu             CSE
+       100 bhavs           CSE
+       100 Leela           CSE
+       100 Anu             CSE
+       100 bhavs           CSE
+
+6 rows selected.
+
+SQL> update Student1 set studentid(431)=100;
+update Student1 set studentid(431)=100
+                             *
+ERROR at line 1:
+ORA-00927: missing equal sign
+
+SQL> select * from Student1;
+
+ STUDENTID STUDENTNAME     DEPTN
+---------- --------------- -----
+       100 Leela           CSE
+       100 Anu             CSE
+       100 bhavs           CSE
+       100 Leela           CSE
+       100 Anu             CSE
+       100 bhavs           CSE
+
+6 rows selected.
+
+SQL> update Student1 set studentid=431 where studentname=Leela;
+update Student1 set studentid=431 where studentname=Leela
+                                                    *
+ERROR at line 1:
+ORA-00904: "LEELA": invalid identifier
+
+
+SQL> update Student1 set studentid=431 where studentname='Leela';
+
+2 rows updated.
+
+SQL> select * from Student1;
+
+ STUDENTID STUDENTNAME     DEPTN
+---------- --------------- -----
+       431 Leela           CSE
+       100 Anu             CSE
+       100 bhavs           CSE
+       431 Leela           CSE
+       100 Anu             CSE
+       100 bhavs           CSE
+
+6 rows selected.
+
+SQL> update Student1 set studentid=028 where studentname=bhavs;
+update Student1 set studentid=028 where studentname=bhavs
+                                                    *
+ERROR at line 1:
+ORA-00904: "BHAVS": invalid identifier
+
+
+SQL> update Student1 set studentid=028 where studentname='bhavs';
+
+2 rows updated.
+
+SQL> select * from Student1;
+
+ STUDENTID STUDENTNAME     DEPTN
+---------- --------------- -----
+       431 Leela           CSE
+       100 Anu             CSE
+        28 bhavs           CSE
+       431 Leela           CSE
+       100 Anu             CSE
+        28 bhavs           CSE
+
+6 rows selected.
+
+SQL> desc Student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(15)
+ DEPTNAME                                           VARCHAR2(5)
+
+SQL> select * from Student;
+
+ STUDENTID STUDENTNAME     DEPTN
+---------- --------------- -----
+       431 Leela           CSE
+        48 Anu             CSE
+        28 bhavs           CSE
+
+SQL>
