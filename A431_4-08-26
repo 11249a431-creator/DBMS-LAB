@@ -1,0 +1,289 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Aug 4 12:13:40 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A431@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table course(
+  2  courseid Number(8) PRIMARY KEY,
+  3  coursename VarChar2(28)
+  4  );
+
+Table created.
+
+SQL> create table student(
+  2  regID Number(10) PRIMARY KEY,
+  3  studentName VarChar2(10) NOT NULL,
+  4  courseID Number(8) references course(courseID),
+  5  studentAge Number(3) check(studentAge>=18),
+  6  mailID VarChar2(40)
+  7  );
+
+Table created.
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGID                                     NOT NULL NUMBER(10)
+ STUDENTNAME                               NOT NULL VARCHAR2(10)
+ COURSEID                                           NUMBER(8)
+ STUDENTAGE                                         NUMBER(3)
+ MAILID                                             VARCHAR2(40)
+
+SQL> desc course;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSEID                                  NOT NULL NUMBER(8)
+ COURSENAME                                         VARCHAR2(28)
+
+SQL> select *from course;
+
+no rows selected
+
+SQL> insert into course
+  2  values(22,'CSE');
+
+1 row created.
+
+SQL> insert into course values(3,'dbms');
+
+1 row created.
+
+SQL> select *from course;
+
+  COURSEID COURSENAME
+---------- ----------------------------
+        22 CSE
+         3 dbms
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGID                                     NOT NULL NUMBER(10)
+ STUDENTNAME                               NOT NULL VARCHAR2(10)
+ COURSEID                                           NUMBER(8)
+ STUDENTAGE                                         NUMBER(3)
+ MAILID                                             VARCHAR2(40)
+
+SQL> insert into student values(431,'Leela',22,19,'leela@gmail.com');
+
+1 row created.
+
+SQL> insert into student values(27,'supriya',22,18,'supriya@gmail.com');
+
+1 row created.
+
+SQL> insert into student values(18,'vaishnavi',3,22,'vaishu@gmail.com');
+
+1 row created.
+
+SQL> select *from student;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE
+---------- ---------- ---------- ----------
+MAILID
+----------------------------------------
+       431 Leela              22         19
+leela@gmail.com
+
+        27 supriya            22         18
+supriya@gmail.com
+
+        18 vaishnavi           3         22
+vaishu@gmail.com
+
+
+SQL> select *from student where studentName='supriya';
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE
+---------- ---------- ---------- ----------
+MAILID
+----------------------------------------
+        27 supriya            22         18
+supriya@gmail.com
+
+
+SQL> select *from student;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE
+---------- ---------- ---------- ----------
+MAILID
+----------------------------------------
+       431 Leela              22         19
+leela@gmail.com
+
+        27 supriya            22         18
+supriya@gmail.com
+
+        18 vaishnavi           3         22
+vaishu@gmail.com
+
+
+SQL> set linesize 150
+SQL> coloum mailid format A30
+SP2-0734: unknown command beginning "coloum mai..." - rest of line ignored.
+SQL> select * from student;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE MAILID
+---------- ---------- ---------- ---------- ----------------------------------------
+       431 Leela              22         19 leela@gmail.com
+        27 supriya            22         18 supriya@gmail.com
+        18 vaishnavi           3         22 vaishu@gmail.com
+
+SQL> select *from student where regID =18;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE MAILID
+---------- ---------- ---------- ---------- ----------------------------------------
+        18 vaishnavi           3         22 vaishu@gmail.com
+
+SQL> alter table student modify(year Number(4),gender VarChar2(5));
+alter table student modify(year Number(4),gender VarChar2(5))
+                           *
+ERROR at line 1:
+ORA-00904: "YEAR": invalid identifier
+
+
+SQL> alter table student modify(grade Var,gender VarChar2(
+  2
+SQL> alter table student modify(grade Varchar2(3),gender VarChar2(5));
+alter table student modify(grade Varchar2(3),gender VarChar2(5))
+                           *
+ERROR at line 1:
+ORA-00904: "GRADE": invalid identifier
+
+
+SQL> ALTER TABLE student
+  2  ADD (grade VARCHAR2(3), gender VARCHAR2(5));
+
+Table altered.
+
+SQL>
+SQL> desc student;
+ Name
+             Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ REGID
+             NOT NULL NUMBER(10)
+ STUDENTNAME
+             NOT NULL VARCHAR2(10)
+ COURSEID
+                      NUMBER(8)
+ STUDENTAGE
+                      NUMBER(3)
+ MAILID
+                      VARCHAR2(40)
+ GRADE
+                      VARCHAR2(3)
+ GENDER
+                      VARCHAR2(5)
+
+SQL> select *from student
+  2
+SQL> select *from student;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE MAILID
+             GRA GENDE
+---------- ---------- ---------- ---------- ---------------------------------------- --- -----
+       431 Leela              22         19 leela@gmail.com
+        27 supriya            22         18 supriya@gmail.com
+        18 vaishnavi           3         22 vaishu@gmail.com
+
+SQL> set linesize 500
+SQL> select *from student;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE MAILID
+             GRA GENDE
+---------- ---------- ---------- ---------- ---------------------------------------- --- -----
+       431 Leela              22         19 leela@gmail.com
+        27 supriya            22         18 supriya@gmail.com
+        18 vaishnavi           3         22 vaishu@gmail.com
+
+SQL> COLUMN studentnam FORMAT A15
+SQL> COLUMN mailid FORMAT A30
+SQL> COLUMN grade FORMAT A5
+SQL> COLUMN gender FORMAT A8
+SQL>
+SQL> select *from student;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE MAILID                         GRADE GENDER
+---------- ---------- ---------- ---------- ------------------------------ ----- --------
+       431 Leela              22         19 leela@gmail.com
+        27 supriya            22         18 supriya@gmail.com
+        18 vaishnavi           3         22 vaishu@gmail.com
+
+SQL> UPDATE student
+  2  SET grade = 'A',
+  3      gender = 'F'
+  4  WHERE regid = 431;
+
+1 row updated.
+
+SQL>  UPDATE student
+  2    2  SET grade = 'A',
+  3    3      gender = 'F'
+  4    4  WHERE regid =27;
+  2  SET grade = 'A',
+  *
+ERROR at line 2:
+ORA-00971: missing SET keyword
+
+
+SQL> UPDATE student
+  2  SET grade = 'A',
+  3      gender = 'F'
+  4  WHERE regid = 27;
+
+1 row updated.
+
+SQL> UPDATE student
+  2    2  SET grade = 'A',
+  3    3      gender = 'F'
+  4    4  WHERE regid
+  5
+SQL> UPDATE student
+  2  SET grade = 'B',
+  3      gender = 'F'
+  4  WHERE regid = 27;
+
+1 row updated.
+
+SQL> UPDATE student
+  2  SET grade = 'A',
+  3      gender = 'F'
+  4  WHERE regid = 18;
+
+1 row updated.
+
+SQL> select *from student;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE MAILID                         GRADE GENDER
+---------- ---------- ---------- ---------- ------------------------------ ----- --------
+       431 Leela              22         19 leela@gmail.com                A     F
+        27 supriya            22         18 supriya@gmail.com              B     F
+        18 vaishnavi           3         22 vaishu@gmail.com               A     F
+
+SQL> select *from student where studentName='supriya';
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE MAILID                         GRADE GENDER
+---------- ---------- ---------- ---------- ------------------------------ ----- --------
+        27 supriya            22         18 supriya@gmail.com              B     F
+
+SQL> select *from student where grade=A;
+select *from student where grade=A
+                                 *
+ERROR at line 1:
+ORA-00904: "A": invalid identifier
+
+
+SQL> select *from student where grade='A';
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE MAILID                         GRADE GENDER
+---------- ---------- ---------- ---------- ------------------------------ ----- --------
+       431 Leela              22         19 leela@gmail.com                A     F
+        18 vaishnavi           3         22 vaishu@gmail.com               A     F
+
+SQL>
