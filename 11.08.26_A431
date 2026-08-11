@@ -1,0 +1,193 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Aug 11 14:32:30 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A431@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table course2(courseID VARCHAR2(10),courseName CHAR(50));
+
+Table created.
+
+
+SQL> desc course2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSEID                                           VARCHAR2(10)
+ COURSENAME                                         CHAR(50)
+
+SQL> ALTER TABLE course2
+  2  ADD CONSTRAINT course2_pk PRIMARY KEY (courseID);
+
+Table altered.
+
+SQL> create table student3(regID VARCHAR2(10),studentName CHAR(50),courseID VARCHAR2(10),studentAge NUMBER(3),mailID VARCHAR2(50));
+
+Table created.
+
+SQL> ALTER TABLE student3
+  2  ADD CONSTRAINT
+  3
+SQL> drop table student3;
+
+Table dropped.
+
+SQL> create table student3(
+  2  regID NUMBER(10) PRIMARY KEY,
+  3  studentName VARCHAR2(10) NOT NULL,
+  4  courseID VARCHAR2(10) REFERENCES course2(courseID),
+  5  studentAge Number(3) CHECK(studentAge>=18),
+  6  mailID VarChar2(50)
+  7  );
+
+Table created.
+
+SQL> desc student3;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGID                                     NOT NULL NUMBER(10)
+ STUDENTNAME                               NOT NULL VARCHAR2(10)
+ COURSEID                                           VARCHAR2(10)
+ STUDENTAGE                                         NUMBER(3)
+ MAILID                                             VARCHAR2(50)
+
+SQL> select *from course;
+
+  COURSEID COURSENAME
+---------- ----------------------------
+        22 CSE
+         3 dbms
+
+SQL> select *from course2;
+
+no rows selected
+
+SQL> insert into course2
+  2  values(22,'CSE');
+
+1 row created.
+
+SQL> insert into course2
+  2  values(18,'DBMS');
+
+1 row created.
+
+SQL> desc table student3;
+Usage: DESCRIBE [schema.]object[@db_link]
+SQL> desc student3;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGID                                     NOT NULL NUMBER(10)
+ STUDENTNAME                               NOT NULL VARCHAR2(10)
+ COURSEID                                           VARCHAR2(10)
+ STUDENTAGE                                         NUMBER(3)
+ MAILID                                             VARCHAR2(50)
+
+SQL> insert into student3 values(431,'supriya',22,19,'supriya@gmail.com');
+
+1 row created.
+
+SQL> insert into student3 values(432,'Leela',22,20,'leela@gmail.com');
+
+1 row created.
+
+SQL> desc student3;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGID                                     NOT NULL NUMBER(10)
+ STUDENTNAME                               NOT NULL VARCHAR2(10)
+ COURSEID                                           VARCHAR2(10)
+ STUDENTAGE                                         NUMBER(3)
+ MAILID                                             VARCHAR2(50)
+
+SQL> select *from student3;
+
+     REGID STUDENTNAM COURSEID   STUDENTAGE
+---------- ---------- ---------- ----------
+MAILID
+--------------------------------------------------
+       431 supriya    22                 19
+supriya@gmail.com
+
+       432 Leela      22                 20
+leela@gmail.com
+
+
+SQL> set linesize 200
+SQL> coloum mailid format A30
+SP2-0734: unknown command beginning "coloum mai..." - rest of line ignored.
+SQL> select *from student3;
+
+     REGID STUDENTNAM COURSEID   STUDENTAGE MAILID
+---------- ---------- ---------- ---------- --------------------------------------------------
+       431 supriya    22                 19 supriya@gmail.com
+       432 Leela      22                 20 leela@gmail.com
+
+SQL> alter table course2 modify courseID VARCHAR2(20);
+
+Table altered.
+
+SQL> select * from student3 where STUDENTNAME=supriya;
+select * from student3 where STUDENTNAME=supriya
+                                         *
+ERROR at line 1:
+ORA-00904: "SUPRIYA": invalid identifier
+
+
+SQL> desc student3;
+ Name
+                                   Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGID
+                                   NOT NULL NUMBER(10)
+ STUDENTNAME
+                                   NOT NULL VARCHAR2(10)
+ COURSEID
+                                            VARCHAR2(10)
+ STUDENTAGE
+                                            NUMBER(3)
+ MAILID
+                                            VARCHAR2(50)
+
+
+SQL> select * from student3 where studentName='supriya';
+
+     REGID STUDENTNAM COURSEID   STUDENTAGE MAILID
+---------- ---------- ---------- ---------- --------------------------------------------------
+       431 supriya    22                 19 supriya@gmail.com
+
+SQL> select * from student3 where studentAge=19;
+
+     REGID STUDENTNAM COURSEID   STUDENTAGE MAILID
+---------- ---------- ---------- ---------- --------------------------------------------------
+       431 supriya    22                 19 supriya@gmail.com
+
+SQL> delete from student3
+  2  where  courseID=22;
+
+2 rows deleted.
+
+SQL> desc student3;
+ Name
+                                   Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGID
+                                   NOT NULL NUMBER(10)
+ STUDENTNAME
+                                   NOT NULL VARCHAR2(10)
+ COURSEID
+                                            VARCHAR2(10)
+ STUDENTAGE
+                                            NUMBER(3)
+ MAILID
+                                            VARCHAR2(50)
+
+SQL> select * from student3;
+
+no rows selected
+
+SQL>
