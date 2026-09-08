@@ -1,0 +1,373 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Aug 18 12:22:11 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A431@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> SELECT Student.Name, Course.Course_Name
+  2  FROM Student
+  3  CROSS JOIN Course;
+SELECT Student.Name, Course.Course_Name
+       *
+ERROR at line 1:
+ORA-00904: "STUDENT"."NAME": invalid identifier
+
+
+SQL> SELECT student.student_name, course.course_name
+  2  FROM student
+  3  CROSS JOIN course;
+
+no rows selected
+
+SQL> SELECT * FROM student;
+
+no rows selected
+
+SQL> SELECT * FROM course;
+
+no rows selected
+
+SQL> INSERT INTO course VALUES (101, 'Leela', 'Computer Science');
+
+1 row created.
+
+SQL> INSERT INTO course VALUES (102, 'Seshi', 'Electronics');
+
+1 row created.
+
+SQL> INSERT INTO course VALUES (103, 'Zara', 'Information Technology');COMMIT;
+INSERT INTO course VALUES (103, 'Zara', 'Information Technology');COMMIT
+                                                                  *
+ERROR at line 1:
+ORA-00911: invalid character
+
+SQL> commit;
+
+Commit complete.
+
+SQL> SELECT student.student_name, course.course_name
+  2  FROM student
+  3  CROSS JOIN course;
+
+no rows selected
+
+SQL> SELECT student.student_name, course.course_name
+  2  FROM student
+  3  CROSS JOIN course;
+
+no rows selected
+
+SQL> INSERT INTO student VALUES (1, 'Leela', 'F', 20, 'CSE', 'leela@gmail.com', 95);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO student VALUES (2, 'Seshi', 'M', 21, 'ECE', 'seshi@gmail.com', 88);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO student VALUES (3, 'Zara', 'F', 19, 'IT', 'zara@gmail.com', 91);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO student VALUES (4, 'Anish', 'M', 22, 'MECH', 'anish@gmail.com', 84);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO student VALUES (5, 'Sneha', 'F', 20, 'CIVIL', 'sneha@gmail.com', 97);
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM student;
+
+STUDENT_ID STUDENT_NAME                                       G        AGE
+---------- -------------------------------------------------- - ----------
+COURSE
+------------------------------
+EMAIL                                                   MARKS
+-------------------------------------------------- ----------
+         1 Leela                                                F         20
+CSE
+leela@gmail.com                                             95
+
+         2 Seshi                                                M         21
+ECE
+seshi@gmail.com                                             88
+
+STUDENT_ID STUDENT_NAME                                       G        AGE
+---------- -------------------------------------------------- - ----------
+COURSE
+------------------------------
+EMAIL                                                   MARKS
+-------------------------------------------------- ----------
+
+         3 Zara                                                 F         19
+IT
+zara@gmail.com                                              91
+
+         4 Anish                                                M         22
+MECH
+anish@gmail.com                                             84
+
+STUDENT_ID STUDENT_NAME                                       G        AGE
+---------- -------------------------------------------------- - ----------
+COURSE
+------------------------------
+EMAIL                                                   MARKS
+-------------------------------------------------- ----------
+         5 Sneha                                                F         20
+CIVIL
+sneha@gmail.com                                             97
+
+
+SQL> SELECT * FROM course;
+
+ COURSE_ID NAME
+---------- --------------------------------------------------
+COURSE_NAME
+--------------------------------------------------
+       101 Leela
+Computer Science
+
+       102 Seshi
+Electronics
+
+       103 Zara
+Information Technology
+
+
+SQL> SELECT student.student_name, course.course_name
+  2  FROM student
+  3  CROSS JOIN course;
+
+STUDENT_NAME
+--------------------------------------------------
+COURSE_NAME
+--------------------------------------------------
+Leela
+Computer Science
+
+Leela
+Electronics
+
+Leela
+Information Technology
+
+
+STUDENT_NAME
+--------------------------------------------------
+COURSE_NAME
+--------------------------------------------------
+Seshi
+Computer Science
+
+Seshi
+Electronics
+
+Seshi
+Information Technology
+
+
+STUDENT_NAME
+--------------------------------------------------
+COURSE_NAME
+--------------------------------------------------
+Zara
+Computer Science
+
+Zara
+Electronics
+
+Zara
+Information Technology
+
+
+STUDENT_NAME
+--------------------------------------------------
+COURSE_NAME
+--------------------------------------------------
+Anish
+Computer Science
+
+Anish
+Electronics
+
+Anish
+Information Technology
+
+
+STUDENT_NAME
+--------------------------------------------------
+COURSE_NAME
+--------------------------------------------------
+Sneha
+Computer Science
+
+Sneha
+Electronics
+
+Sneha
+Information Technology
+
+
+15 rows selected.
+
+SQL> SELECT student.student_name, course.course_name
+  2  FROM student, course
+  3  WHERE student.student_name = course.name;
+
+STUDENT_NAME
+--------------------------------------------------
+COURSE_NAME
+--------------------------------------------------
+Leela
+Computer Science
+
+Seshi
+Electronics
+
+Zara
+Information Technology
+
+
+SQL> SELECT A.STUDENT_NAME AS STUDENT1,
+  2         B.STUDENT_NAME AS STUDENT2,
+  3         A.COURSE
+  4  FROM STUDENT A, STUDENT B
+  5  WHERE A.COURSE = B.COURSE
+  6  AND A.STUDENT_ID < B.STUDENT_ID;
+
+no rows selected
+
+SQL> WHERE A.COURSE = B.COURSE
+SP2-0734: unknown command beginning "WHERE A.CO..." - rest of line ignored.
+
+SQL> SELECT A.STUDENT_NAME AS STUDENT1,
+  2         B.STUDENT_NAME AS STUDENT2,
+  3         A.COURSE
+  4  FROM STUDENT A, STUDENT B
+  5  WHERE A.COURSE = B.COURSE
+  6  AND A.STUDENT_ID < B.STUDENT_ID;
+
+no rows selected
+
+SQL> UPDATE student
+  2  SET course = 'CSE'
+  3  WHERE student_id = 2;
+
+1 row updated.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT A.STUDENT_NAME AS STUDENT1,
+  2         B.STUDENT_NAME AS STUDENT2,
+  3         A.COURSE
+  4  FROM STUDENT A, STUDENT B
+  5  WHERE A.COURSE = B.COURSE
+  6  AND A.STUDENT_ID < B.STUDENT_ID;
+
+STUDENT1
+--------------------------------------------------
+STUDENT2
+--------------------------------------------------
+COURSE
+------------------------------
+Leela
+Seshi
+CSE
+
+
+SQL> SELECT * FROM STUDENT;
+
+STUDENT_ID STUDENT_NAME                                       G        AGE
+---------- -------------------------------------------------- - ----------
+COURSE
+------------------------------
+EMAIL                                                   MARKS
+-------------------------------------------------- ----------
+         1 Leela                                                F         20
+CSE
+leela@gmail.com                                             95
+
+         2 Seshi                                                M         21
+CSE
+seshi@gmail.com                                             88
+
+STUDENT_ID STUDENT_NAME                                       G        AGE
+---------- -------------------------------------------------- - ----------
+COURSE
+------------------------------
+EMAIL                                                   MARKS
+-------------------------------------------------- ----------
+
+         3 Zara                                                 F         19
+IT
+zara@gmail.com                                              91
+
+         4 Anish                                                M         22
+MECH
+anish@gmail.com                                             84
+
+         5 Sneha                                                F         20
+CIVIL
+sneha@gmail.com                                             97
+
+
+SQL> SELECT
+
+SQL> SELECT S.STUDENT_NAME, S.COURSE, C.COURSE_NAME
+  2  FROM STUDENT S
+  3  FULL OUTER JOIN COURSE C
+  4  ON S.STUDENT_NAME = C.NAME;
+
+STUDENT_NAME
+--------------------------------------------------
+COURSE
+------------------------------
+COURSE_NAME
+--------------------------------------------------
+Leela
+CSE
+Computer Science
+
+Seshi
+CSE
+Electronics
+
+STUDENT_NAME
+--------------------------------------------------
+COURSE
+------------------------------
+COURSE_NAME
+--------------------------------------------------
+Zara
+IT
+Information Technology
+
+Sneha
+CIVIL
+
+STUDENT_NAME
+--------------------------------------------------
+COURSE
+------------------------------
+COURSE_NAME
+--------------------------------------------------
+
+Anish
+MECH
