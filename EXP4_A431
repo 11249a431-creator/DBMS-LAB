@@ -1,0 +1,145 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Sep 8 15:22:43 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A431@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> CREATE TABLE DEPARTMENT
+  2  (
+  3  DEPT_ID NUMBER(3).
+  4
+SQL> CREATE TABLE DEPARTMENT
+  2  (
+  3  DEPT_ID NUMBER(3),
+  4  CONSTRAINT PK_DEPT
+  5  PRIMARY KEY(DEPT_ID)
+  6  );
+
+Table created.
+
+SQL> CREATE TABLE EMPLOYEE
+  2  (
+  3  EMP_ID NUMBER(5),
+  4  EMP_NAME VARCHAR2(20) CONSTRAINT NN_EMPNAME NOT NULL,
+  5  EMAIL VARCHAR2(30),
+  6  SALARY NUMBER(8),
+  7  DEPT_ID NUMBER(3),
+  8  CONSTRAINT PK_EMP PRIMARY KEY(EMP_ID),
+  9  CONSTRAINT UK_EMAIL UNIQUE (EMAIL),
+ 10  CONTRAINT CK_SALARY CHECK (SALARY >=10000),
+ 11  CONSTRAINT FK_DEPT FOREIGN KEY (DEPT_ID)
+ 12  REFERENCE DEPARTMENT(DEPT_ID)
+ 13  );
+CONTRAINT CK_SALARY CHECK (SALARY >=10000),
+                                          *
+ERROR at line 10:
+ORA-02438: Column check constraint cannot reference other columns
+
+SQL> CREATE TABLE EMPLOYEE
+  2  (
+  3      EMP_ID NUMBER(5),
+  4      EMP_NAME VARCHAR2(20) CONSTRAINT NN_EMPNAME NOT NULL,
+  5      EMAIL VARCHAR2(30),
+  6      SALARY NUMBER(8),
+  7      DEPT_ID NUMBER(3),
+  8      CONSTRAINT PK_EMP PRIMARY KEY (EMP_ID),
+  9      CONSTRAINT UK_EMAIL UNIQUE (EMAIL),
+ 10      CONSTRAINT CK_SALARY CHECK (SALARY >= 10000),
+ 11      CONSTRAINT FK_DEPT FOREIGN KEY (DEPT_ID)
+ 12          REFERENCES DEPARTMENT(DEPT_ID)
+ 13  );
+
+Table created.
+
+SQL> INSERT INTO DEPARTMENT VALUES(101,'CSE');
+INSERT INTO DEPARTMENT VALUES(101,'CSE')
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> DESC DEPARTMENT;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_ID                                   NOT NULL NUMBER(3)
+
+SQL> CREATE TABLE DEPARTMENT
+  2  (
+  3     DEPT_ID NUMBER(3)
+  4
+SQL> ALTER TABLE DEPARTMENT ADD DEPT_NAME VARCHAR2(20);
+
+Table altered.
+
+SQL> DESC DEPARTMENT;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_ID                                   NOT NULL NUMBER(3)
+ DEPT_NAME                                          VARCHAR2(20)
+
+SQL> INSERT INTO DEPARTMENT VALUES(101,'CSE');
+
+1 row created.
+
+SQL> INSERT INTO DEPARTMENT VALUES(102,'ECE');
+
+1 row created.
+
+SQL> INSERT EMPLOYEE VALUES(A431,'LEELA','leela@gmail.com',9500000,101);
+INSERT EMPLOYEE VALUES(A431,'LEELA','leela@gmail.com',9500000,101)
+       *
+ERROR at line 1:
+ORA-00925: missing INTO keyword
+
+
+SQL> INSERT EMPLOYEE VALUES(431,'LEELA','leela@gmail.com',950000,101);
+INSERT EMPLOYEE VALUES(431,'LEELA','leela@gmail.com',950000,101)
+       *
+ERROR at line 1:
+ORA-00925: missing INTO keyword
+
+
+SQL> INSERT INTO EMPLOYEE VALUES(431,'LEELA','leela@gmail.com',950000,101);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE VALUES(432,'SUPRIYA','supriya@gmail.com',95000,102);
+
+1 row created.
+
+SQL> SELECT * FROM EMPLOYEE
+  2
+SQL> SELECT * FROM EMPLOYEE;
+
+    EMP_ID EMP_NAME             EMAIL                              SALARY
+---------- -------------------- ------------------------------ ----------
+   DEPT_ID
+----------
+       431 LEELA                leela@gmail.com                    950000
+       101
+
+       432 SUPRIYA              supriya@gmail.com                   95000
+       102
+
+
+SQL> DESC DEPARTMENT;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_ID                                   NOT NULL NUMBER(3)
+ DEPT_NAME                                          VARCHAR2(20)
+
+SQL> DESC EMPLOYEE;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMP_ID                                    NOT NULL NUMBER(5)
+ EMP_NAME                                  NOT NULL VARCHAR2(20)
+ EMAIL                                              VARCHAR2(30)
+ SALARY                                             NUMBER(8)
+ DEPT_ID                                            NUMBER(3)
+
+SQL>
