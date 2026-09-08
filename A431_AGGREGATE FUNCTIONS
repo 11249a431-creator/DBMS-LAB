@@ -1,0 +1,316 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Sep 8 15:07:33 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: a431@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> CREATE TABLE STUDENT1{
+  2  STUDENT_ID NUMBER(10) PRIMARY KEY,
+  3  STUDENT_NAME VARCHAR2(20,
+  4
+SQL>
+SQL> CREATE TABLE STUDENT1{
+  2  STUDENT_ID NUMBER(10) PRIMARY KEY,
+  3  STUDENT_NAME VARCHAR2(20),
+  4  DEPARTMENT VARCHAR2(20),
+  5  AGE NUMBER(2),
+  6  MARKS NUMBER(3)
+  7  };
+CREATE TABLE STUDENT1{
+                     *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL> CREATE TABLE STUDENT1 (
+  2      STUDENT_ID NUMBER(10) PRIMARY KEY,
+  3      STUDENT_NAME VARCHAR2(20),
+  4      DEPARTMENT VARCHAR2(20),
+  5      AGE NUMBER(2),
+  6      MARKS NUMBER(3)
+  7  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT VALUES(101,'LEELA','CSE',20,85);
+INSERT INTO STUDENT VALUES(101,'LEELA','CSE',20,85)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> INSERT INTO STUDENT1 VALUES(101,'LEELA','CSE',20,85);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT1 VALUES(121,'ZARA','ECE',22,78);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT1 VALUES(131,'SUPRIYA','CSE',21,84);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT1 VALUES(431,'SESHI','IT'20'89);
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> INSERT INTO STUDENT1 VALUES(431,'SESHI','IT',20,89);
+
+1 row created.
+
+SQL> SELECT *FROM STUDENT;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE
+---------- ---------- ---------- ----------
+MAILID                                   GRA GENDE
+---------------------------------------- --- -----
+       431 Leela              22         19
+leela@gmail.com
+
+        27 supriya            22         18
+supriya@gmail.com
+
+        18 vaishnavi           3         22
+vaishu@gmail.com
+
+
+SQL> SELECT * FROM STUDENT1
+  2
+SQL> SELECT * FROM STUDENT1;
+
+STUDENT_ID STUDENT_NAME         DEPARTMENT                  AGE      MARKS
+---------- -------------------- -------------------- ---------- ----------
+       101 LEELA                CSE                          20         85
+       121 ZARA                 ECE                          22         78
+       131 SUPRIYA              CSE                          21         84
+       431 SESHI                IT                           20         89
+
+SQL> SELECT STUDENT_NAME,MARKS
+  2  FROM STUDENT1;
+
+STUDENT_NAME              MARKS
+-------------------- ----------
+LEELA                        85
+ZARA                         78
+SUPRIYA                      84
+SESHI                        89
+
+SQL> SELECT * FROM STUDENT1 WHERE DEPARTMENT ='CSE';
+
+STUDENT_ID STUDENT_NAME         DEPARTMENT                  AGE      MARKS
+---------- -------------------- -------------------- ---------- ----------
+       101 LEELA                CSE                          20         85
+       131 SUPRIYA              CSE                          21         84
+
+SQL> SELECT STUDENT_NAME,MARKS FROM STUDENT1 WHERE MARKS>80;
+
+STUDENT_NAME              MARKS
+-------------------- ----------
+LEELA                        85
+SUPRIYA                      84
+SESHI                        89
+
+SQL> DELETE STUDENT1 WHERE ROW='AGE';
+DELETE STUDENT1 WHERE ROW='AGE'
+                      *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> DELETE AGE FROM STUDENT1;
+DELETE AGE FROM STUDENT1
+           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ALTER TABLE STUDENT1
+  2  DROP ROW AGE;
+DROP ROW AGE
+     *
+ERROR at line 2:
+ORA-00905: missing keyword
+
+
+SQL> ALTER TABLE STUDENT1
+  2  DELETE COLUMN AGE;
+DELETE COLUMN AGE
+*
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> ALTER TABLE STUDENT1
+  2  DROP COLUMN AGE;
+
+Table altered.
+
+SQL> SELECT * FROM STUDENT1;
+
+STUDENT_ID STUDENT_NAME         DEPARTMENT                MARKS
+---------- -------------------- -------------------- ----------
+       101 LEELA                CSE                          85
+       121 ZARA                 ECE                          78
+       131 SUPRIYA              CSE                          84
+       431 SESHI                IT                           89
+
+SQL> INSERT INTO STUDENT1 VALUES(432,'IT',80);
+INSERT INTO STUDENT1 VALUES(432,'IT',80)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> INSERT INTO STUDENT1 VALUES(432,'STEVE','IT',80);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT1 VALUES(122,'NANCY','ECE',92);
+
+1 row created.
+
+SQL> SELECT * FROM STUDENT1;
+
+STUDENT_ID STUDENT_NAME         DEPARTMENT                MARKS
+---------- -------------------- -------------------- ----------
+       101 LEELA                CSE                          85
+       121 ZARA                 ECE                          78
+       131 SUPRIYA              CSE                          84
+       431 SESHI                IT                           89
+       432 STEVE                IT                           80
+       122 NANCY                ECE                          92
+
+6 rows selected.
+
+SQL> SELECT COUNT(*) AS TOTAL_STUDENTS
+  2  FROM STUDENT;
+
+TOTAL_STUDENTS
+--------------
+             3
+
+SQL> SELECT COUNT(*) AS TOTAL_STUDENTS
+  2  FROM STUDENT1;
+
+TOTAL_STUDENTS
+--------------
+             6
+
+SQL> SELECT SUM(MARKS) AS AVERAGE_MARKS
+  2  FROM STUDENT1;
+
+AVERAGE_MARKS
+-------------
+          508
+
+SQL> SELECT AVG(MARKS) AS AVERAGE_MARKS
+  2  FROM STUDENT1;
+
+AVERAGE_MARKS
+-------------
+   84.6666667
+
+SQL> SELECT MAX(MARKS) AS HIGHEST MARKS
+  2  FROM STUDENT1;
+SELECT MAX(MARKS) AS HIGHEST MARKS
+                             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT MAX(MARKS) AS HIGHEST_MARKS
+  2  FROM STUDENT1;
+
+HIGHEST_MARKS
+-------------
+           92
+
+SQL> SELECT MIN(MARKS) AS LOWEST_MARKS
+  2  FROM STUDENT1;
+
+LOWEST_MARKS
+------------
+          78
+
+SQL> SELECT DEPARTMENT,AVG(MARKS) AS AVG_MARKS
+  2  FROM STUDENT
+  3  GROUP BY DEPARTMENT;
+GROUP BY DEPARTMENT
+         *
+ERROR at line 3:
+ORA-00904: "DEPARTMENT": invalid identifier
+
+
+SQL> SELECT DEPARTMENT,AVG(MARKS) AS AVG_MARKS
+  2  FROM STUDENT1
+  3  GROUP BY DEPARTMENT;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+IT                         84.5
+CSE                        84.5
+ECE                          85
+
+SQL> SELECT DEPARTMENT,MAX(MARKS) AS MAX_MARKS
+  2  FROM STUDENT
+  3  GROUP BY DEPARTMENT;
+GROUP BY DEPARTMENT
+         *
+ERROR at line 3:
+ORA-00904: "DEPARTMENT": invalid identifier
+
+
+SQL> SELECT DEPARTMENT,MAX(MARKS) AS MAX_MARKS
+  2  FROM STUDENT
+  3
+SQL> SELECT DEPARTMENT,MAX(MARKS) AS MAX_MARKS
+  2  FROM STUDENT1
+  3  GROUP BY DEPARTMENT;
+
+DEPARTMENT            MAX_MARKS
+-------------------- ----------
+IT                           89
+CSE                          85
+ECE                          92
+
+SQL> SELECT DEPARTMENT,AVG(MARKS) AS AVG_MARKS
+  2  FROM STUDENT1
+  3  GROUP BY DEPARTMENT
+  4  HAVING AVG(MARKS)>80;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+IT                         84.5
+CSE                        84.5
+ECE                          85
+
+SQL> SELECT DEPARTMENT,COUNT(*) AS NO_OF_STUDENTS,
+  2  AVG(MARKS) AS AVG_MARKS,MAX(MARKS) AS HIGHEST_MARK
+  3  FROM STUDENT
+  4  GROUP BY DEPARTMENT
+  5  HAVING AVG(MARKS)>=80;
+HAVING AVG(MARKS)>=80
+           *
+ERROR at line 5:
+ORA-00904: "MARKS": invalid identifier
+
+
+SQL> SELECT DEPARTMENT,AVG(MARKS) AS AVG_MARKS
+  2  FROM STUDENT1
+  3  GROUP BY DEPARTMENT
+  4  HAVING AVG(MARKS)>80;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+IT                         84.5
+CSE                        84.5
+ECE                          85
+
+SQL> AVG(MARKS) AS AVG_MARKS,MAX(MARKS) AS HIGHEST_MARK
