@@ -1,0 +1,120 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Sep 8 15:07:33 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: a431@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> CREATE TABLE STUDENT1{
+  2  STUDENT_ID NUMBER(10) PRIMARY KEY,
+  3  STUDENT_NAME VARCHAR2(20,
+  4
+SQL>
+SQL> CREATE TABLE STUDENT1{
+  2  STUDENT_ID NUMBER(10) PRIMARY KEY,
+  3  STUDENT_NAME VARCHAR2(20),
+  4  DEPARTMENT VARCHAR2(20),
+  5  AGE NUMBER(2),
+  6  MARKS NUMBER(3)
+  7  };
+CREATE TABLE STUDENT1{
+                     *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL> CREATE TABLE STUDENT1 (
+  2      STUDENT_ID NUMBER(10) PRIMARY KEY,
+  3      STUDENT_NAME VARCHAR2(20),
+  4      DEPARTMENT VARCHAR2(20),
+  5      AGE NUMBER(2),
+  6      MARKS NUMBER(3)
+  7  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT VALUES(101,'LEELA','CSE',20,85);
+INSERT INTO STUDENT VALUES(101,'LEELA','CSE',20,85)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> INSERT INTO STUDENT1 VALUES(101,'LEELA','CSE',20,85);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT1 VALUES(121,'ZARA','ECE',22,78);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT1 VALUES(131,'SUPRIYA','CSE',21,84);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT1 VALUES(431,'SESHI','IT'20'89);
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> INSERT INTO STUDENT1 VALUES(431,'SESHI','IT',20,89);
+
+1 row created.
+
+SQL> SELECT *FROM STUDENT;
+
+     REGID STUDENTNAM   COURSEID STUDENTAGE
+---------- ---------- ---------- ----------
+MAILID                                   GRA GENDE
+---------------------------------------- --- -----
+       431 Leela              22         19
+leela@gmail.com
+
+        27 supriya            22         18
+supriya@gmail.com
+
+        18 vaishnavi           3         22
+vaishu@gmail.com
+
+
+SQL> SELECT * FROM STUDENT1
+  2
+SQL> SELECT * FROM STUDENT1;
+
+STUDENT_ID STUDENT_NAME         DEPARTMENT                  AGE      MARKS
+---------- -------------------- -------------------- ---------- ----------
+       101 LEELA                CSE                          20         85
+       121 ZARA                 ECE                          22         78
+       131 SUPRIYA              CSE                          21         84
+       431 SESHI                IT                           20         89
+
+SQL> SELECT STUDENT_NAME,MARKS
+  2  FROM STUDENT1;
+
+STUDENT_NAME              MARKS
+-------------------- ----------
+LEELA                        85
+ZARA                         78
+SUPRIYA                      84
+SESHI                        89
+
+SQL> SELECT * FROM STUDENT1 WHERE DEPARTMENT ='CSE';
+
+STUDENT_ID STUDENT_NAME         DEPARTMENT                  AGE      MARKS
+---------- -------------------- -------------------- ---------- ----------
+       101 LEELA                CSE                          20         85
+       131 SUPRIYA              CSE                          21         84
+
+SQL> SELECT STUDENT_NAME,MARKS FROM STUDENT1 WHERE MARKS>80;
+
+STUDENT_NAME              MARKS
+-------------------- ----------
+LEELA                        85
+SUPRIYA                      84
+SESHI                        89
+
+SQL>
