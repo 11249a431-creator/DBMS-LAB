@@ -1,0 +1,348 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Sep 22 15:43:27 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A431@db2021
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: A431@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> CREATE TABLE COURSE01
+  2  (
+  3  COURSEID NUMBER(10),
+  4  COURSENAME VARCHAR2(30)
+  5  );
+
+Table created.
+
+SQL> CREATE STUDENT01
+  2  (
+  3  STUDENTNAME VARCHAR2(30),
+  4  STUDENTID NUMBER(10)
+  5  );
+CREATE STUDENT01
+       *
+ERROR at line 1:
+ORA-00901: invalid CREATE command
+
+
+SQL> CREATE TABLE STUDENT01
+  2  (
+  3  STUDENTNAME VARCHAR2(30),
+  4  STUDENTID NUMBER(10)
+  5  );
+
+Table created.
+
+SQL> SELECT* FROM STUDENT01
+  2  CROSS JOIN COURSE01;
+
+no rows selected
+
+SQL> INSERT INTO STUDENT01 VALUES('LEELA',431);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT01 VALUES('BHAVNA',28);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT01 VALUES('SUPRIYA',14);
+
+1 row created.
+
+SQL> INSERT INTO COURSE01 VALUES(101,'NLP');
+
+1 row created.
+
+SQL> INSERT INTO COURSE01 VALUES(102,'PYTHON');
+
+1 row created.
+
+SQL> INSERT INTO COURSE01 VALUES(103,'JAVA');
+
+1 row created.
+
+SQL> DESC COURSE01;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSEID                                           NUMBER(10)
+ COURSENAME                                         VARCHAR2(30)
+
+SQL> SELECT * FROM COURSE01;
+
+  COURSEID COURSENAME
+---------- ------------------------------
+       101 NLP
+       102 PYTHON
+       103 JAVA
+
+SQL> SELECT *FROM STUDENT01;
+
+STUDENTNAME                     STUDENTID
+------------------------------ ----------
+LEELA                                 431
+BHAVNA                                 28
+SUPRIYA                                14
+
+SQL> SELECT * FROM STUDENT1
+  2
+SQL> SELECT * FROM STUDENT01
+  2  CROSS JOIN COURSE01;
+
+STUDENTNAME                     STUDENTID   COURSEID
+------------------------------ ---------- ----------
+COURSENAME
+------------------------------
+LEELA                                 431        101
+NLP
+
+LEELA                                 431        102
+PYTHON
+
+LEELA                                 431        103
+JAVA
+
+
+STUDENTNAME                     STUDENTID   COURSEID
+------------------------------ ---------- ----------
+COURSENAME
+------------------------------
+BHAVNA                                 28        101
+NLP
+
+BHAVNA                                 28        102
+PYTHON
+
+BHAVNA                                 28        103
+JAVA
+
+
+STUDENTNAME                     STUDENTID   COURSEID
+------------------------------ ---------- ----------
+COURSENAME
+------------------------------
+SUPRIYA                                14        101
+NLP
+
+SUPRIYA                                14        102
+PYTHON
+
+SUPRIYA                                14        103
+JAVA
+
+
+9 rows selected.
+
+SQL> INSERT INTO STUDENT01 VALUES('MIKASA',13);
+
+1 row created.
+
+SQL> INSERT INTO COURSE01 VALUES(104,'SQL');
+
+1 row created.
+
+SQL> INSERT INTO STUDENT01 VALUES('ZENITSU',22);
+
+1 row created.
+
+SQL> SELECT * FROM STUDENT01;
+
+STUDENTNAME                     STUDENTID
+------------------------------ ----------
+LEELA                                 431
+BHAVNA                                 28
+SUPRIYA                                14
+MIKASA                                 13
+ZENITSU                                22
+
+SQL> SELECT * FROM COURSE01;
+
+  COURSEID COURSENAME
+---------- ------------------------------
+       101 NLP
+       102 PYTHON
+       103 JAVA
+       104 SQL
+
+SQL> SELECT S.STUDENTNAME,
+  2  S.STUDENTID,
+  3  S.COURSEID,
+  4  C.COURSENAME
+  5  FROM STUDENT01 S
+  6  JOIN COURSE01 C
+  7  ON S.STUDENTID =C.COURSEID;
+S.COURSEID,
+*
+ERROR at line 3:
+ORA-00904: "S"."COURSEID": invalid identifier
+
+
+SQL> SELECT S.STUDENTNAME,
+  2  S.STUDENTID,
+  3  S.COURSEID,
+  4
+SQL> SELECT S.STUDENTNAME,
+  2  S.STUDENTID,
+  3  C.COURSEID,
+  4  C.COURSENAME
+  5  FROM STUDENT01 S
+  6  JOIN COURSE01 C
+  7  ON S.STUDENTID =C.COURSEID;
+
+no rows selected
+
+SQL> INSERT INTO STUDENT01 VALUES('ZENITSU',101);
+
+1 row created.
+
+SQL> INSERT INTO COURSE01 VALUES(101,'SQL');
+
+1 row created.
+
+SQL> SELECT * FROM STUDENT01;
+
+STUDENTNAME                     STUDENTID
+------------------------------ ----------
+LEELA                                 431
+BHAVNA                                 28
+SUPRIYA                                14
+MIKASA                                 13
+ZENITSU                                22
+ZENITSU                               101
+
+6 rows selected.
+
+SQL> SELECT* FROM COURSE01;
+
+  COURSEID COURSENAME
+---------- ------------------------------
+       101 NLP
+       102 PYTHON
+       103 JAVA
+       104 SQL
+       101 SQL
+
+SQL> SELECT S.STUDENTNAME,
+  2  S.STUDENTID,
+  3  C.COURSEID,
+  4  C.COURSENAME
+  5  FROM STUDENT01 S
+  6  JOIN COURSE01 C
+  7  ON S.STUDENTID=C.COURSEID;
+
+STUDENTNAME                     STUDENTID   COURSEID
+------------------------------ ---------- ----------
+COURSENAME
+------------------------------
+ZENITSU                               101        101
+SQL
+
+ZENITSU                               101        101
+NLP
+
+
+SQL> SELECT S.STUDENTNAME,
+  2
+SQL> SELECT S1.STUDENTNAME AS STUDENT1,
+  2  S2.STUDENTNAME AS STUDENT2,
+  3  S1.STUDENTID
+  4  FROM STUDENT01 S1
+  5  JOIN STUDENT01 S2
+  6  ON S1.STUDENTID=S2.STUDENTID
+  7
+SQL> INSERT INTO STUDENT01 VALUES('MIKASA',431);
+
+1 row created.
+
+SQL> SELECT S1.STUDENTNAME AS STUDENT1,
+  2  S2.STUDENTNAME AS STUDENT2,
+  3  S1.STUDENTID
+  4  FROM STUDENT01 S1
+  5  JOIN STUDENT01 S2
+  6  ON S1.STUDENTID=S2.STUDENTID
+  7  AND S1.STUDENTNAME<>S2.STUDENTNAME;
+
+STUDENT1                       STUDENT2                        STUDENTID
+------------------------------ ------------------------------ ----------
+MIKASA                         LEELA                                 431
+LEELA                          MIKASA                                431
+
+SQL> SELECT S.STUDENTNAME,
+  2  S.STUDENTID,
+  3  C.COURSENAME
+  4  FROM STUDENT01 S
+  5  LEFT OUTER JOIN COURSE01 C
+  6  ON S.STUDENTID=C.COURSEID;
+
+STUDENTNAME                     STUDENTID COURSENAME
+------------------------------ ---------- ------------------------------
+ZENITSU                               101 NLP
+ZENITSU                               101 SQL
+MIKASA                                 13
+ZENITSU                                22
+MIKASA                                431
+LEELA                                 431
+BHAVNA                                 28
+SUPRIYA                                14
+
+8 rows selected.
+
+SQL> SELECT S.STUDENTNAME,
+  2  S.STUDENTID,
+  3  C.COURSEID,
+  4  C.COURSENAME
+  5  FROM STUDENT01 S
+  6  LEFT OUTER JOIN COURSE01 C
+  7  ON S.STUDENTID=C.COURSEID;
+
+STUDENTNAME                     STUDENTID   COURSEID
+------------------------------ ---------- ----------
+COURSENAME
+------------------------------
+ZENITSU                               101        101
+NLP
+
+ZENITSU                               101        101
+SQL
+
+MIKASA                                 13
+
+
+
+STUDENTNAME                     STUDENTID   COURSEID
+------------------------------ ---------- ----------
+COURSENAME
+------------------------------
+ZENITSU                                22
+
+
+MIKASA                                431
+
+
+LEELA                                 431
+
+
+
+STUDENTNAME                     STUDENTID   COURSEID
+------------------------------ ---------- ----------
+COURSENAME
+------------------------------
+BHAVNA                                 28
+
+
+SUPRIYA                                14
+
+
+
+8 rows selected.
+
+SQL>
