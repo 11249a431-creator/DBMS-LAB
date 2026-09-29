@@ -1,0 +1,115 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Sep 29 15:06:42 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A431@db2021
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: A431@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> CREATE TABLE STUDENT001(
+  2  STUDENT_IS NUMBER(10) PRIMARY KEY,
+  3
+SQL> CREATE TABLE STUDENT001(
+  2  STUDENT_ID NUMBER(10) PRIMARY KEY,
+  3  STUDENT_NAME VARCHAR2(30),
+  4  MARKS NUMBER(5)
+  5  );
+CREATE TABLE STUDENT001(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> REMOVE TABLE STUDENT001;
+SP2-0734: unknown command beginning "REMOVE TAB..." - rest of line ignored.
+SQL> DROP TABLE STUDENT001;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT001(
+  2  STUDENT_ID NUMBER(10) PRIMARY KEY,
+  3  STUDENT_NAME VARCHAR2(30),
+  4  MARKS NUMBER(5)
+  5  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT001 VALUES(431,'LEELA',1000);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT001 VALUES(2015,'SUPRIYA',989);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT001 VALUES(2005,'VAISHUU',900);
+
+1 row created.
+
+SQL> GRANT SELECT ON STUDENT001 TO SCOTT;
+
+Grant succeeded.
+
+SQL> GRANT SELECT,INSERT,UPDATE ON STUDENT001 TO SCOTT;
+
+Grant succeeded.
+
+SQL> REVOKE INSERT ON STUDENT001 FROM SCOTT;
+
+Revoke succeeded.
+
+SQL> INSERT INTO STUDENT001 VALUES(022,'MIKASA',999);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT001 VALUES(027,'BHAVANA',977);
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> INSERT INTO STUDENT001 VALUES(002,'ZENITSU',560);
+
+1 row created.
+
+SQL> SAVEPOINT SP1;
+
+Savepoint created.
+
+SQL> INSERT INTO STUDENT001 VALUES(010,'DEMON',898);
+
+1 row created.
+
+SQL> ROLLBACK TO SP1;
+
+Rollback complete.
+
+SQL> SELECT * FROM STUDENT001;
+
+STUDENT_ID STUDENT_NAME                        MARKS
+---------- ------------------------------ ----------
+       431 LEELA                                1000
+      2015 SUPRIYA                               989
+      2005 VAISHUU                               900
+        22 MIKASA                                999
+        27 BHAVANA                               977
+         2 ZENITSU                               560
+
+6 rows selected.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL>
